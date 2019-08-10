@@ -1,0 +1,4 @@
+manage.py - allow to run commands
+python3 manage.py runserver : command to run the server
+python3 manage.py migrate : command for migrations
+python3 manage.py startapp <appname>
