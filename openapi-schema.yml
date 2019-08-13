@@ -1,0 +1,214 @@
+openapi: 3.0.2
+info:
+  version: TODO
+  title: ''
+paths:
+  /api/v1/weather/:
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                measurement_date:
+                  type: string
+                  format: date-time
+                temperature:
+                  type: string
+                  maxLength: 40
+              required:
+              - temperature
+      operationId: createWeather
+      parameters: []
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      operationId: ListWeathers
+      parameters: []
+  /swagger/:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+      operationId: ListSwaggerSchemas
+      parameters: []
+  /api/v1/weather/{id}/:
+    patch:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                measurement_date:
+                  type: string
+                  format: date-time
+                temperature:
+                  type: string
+                  maxLength: 40
+      operationId: partial_updateWeather
+      parameters:
+      - schema:
+          type: string
+        name: id
+        required: true
+        in: path
+        description: A unique integer value identifying this weather.
+    put:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                measurement_date:
+                  type: string
+                  format: date-time
+                temperature:
+                  type: string
+                  maxLength: 40
+              required:
+              - temperature
+      operationId: updateWeather
+      parameters:
+      - schema:
+          type: string
+        name: id
+        required: true
+        in: path
+        description: A unique integer value identifying this weather.
+    delete:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      operationId: destroyWeather
+      parameters:
+      - schema:
+          type: string
+        name: id
+        required: true
+        in: path
+        description: A unique integer value identifying this weather.
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  measurement_date:
+                    type: string
+                    format: date-time
+                  id:
+                    type: integer
+                    readOnly: true
+                  temperature:
+                    type: string
+                    maxLength: 40
+                required:
+                - temperature
+      operationId: retrieveWeather
+      parameters:
+      - schema:
+          type: string
+        name: id
+        required: true
+        in: path
+        description: A unique integer value identifying this weather.
+  /api/v1/parse/:
+    post:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+      operationId: Createweather_parser
+      parameters: []
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+      operationId: Listweather_parsers
+      parameters: []

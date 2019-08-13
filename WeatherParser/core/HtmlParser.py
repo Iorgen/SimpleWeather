@@ -1,22 +1,19 @@
-from .BaseParser import BaseParser
+from .BaseParser import BaseHtmlParser
 from bs4 import BeautifulSoup
-import requests
+import logging
+logger = logging.getLogger(__name__)
 
 
-class BaseHtmlParser(BaseParser):
-    """ Base class for all kind of html parsers
-    """
-    def __init__(self, **kwargs):
-        super(BaseHtmlParser, self).__init__(params={}, **kwargs)
-
-
+# TODO fix YANDEX parser
 class YandexHtmlWeatherParser(BaseHtmlParser):
+
+    _url = 'https://yandex.ru/pogoda/'
 
     def __init__(self, **kwds):
         super(YandexHtmlWeatherParser, self).__init__(**kwds)
 
     def prepare_url(self, city):
-        self.url += city
+        self._url += city
 
     def parse_response(self, response):
         soup = BeautifulSoup(response.text, 'lxml')
@@ -24,3 +21,9 @@ class YandexHtmlWeatherParser(BaseHtmlParser):
         current_weather = soup.find(class_='temp fact__temp')
         print(current_time)
         print(current_weather)
+        weather_info = []
+        weather_info['temperature'] = '123'
+        weather_info['source'] = '123'
+        weather_info['date'] = 123456723
+        weather_info['city_name'] = '123'
+        return [weather_info]
