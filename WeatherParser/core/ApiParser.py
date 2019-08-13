@@ -1,10 +1,8 @@
 from .BaseParser import BaseApiKeyParser
 from ApiWeather.exceptions import ResponseParsingException
-# import the logging library
 import logging
-
-# Get an instance of a logger
 logger = logging.getLogger(__name__)
+
 
 class OpenWeatherApiParser(BaseApiKeyParser):
 
@@ -15,7 +13,7 @@ class OpenWeatherApiParser(BaseApiKeyParser):
     _api_key = 'ec96dbe80eea8425e6712cdff8ec9ee2'
 
     _params = {
-
+        "units" : "metric"
     }
 
     def __init__(self, **kwds):
@@ -26,6 +24,7 @@ class OpenWeatherApiParser(BaseApiKeyParser):
 
     def prepare_url(self, city):
         self._params[self._city_param] = city
+        return self._url
 
     def parse_response(self, response):
         try:

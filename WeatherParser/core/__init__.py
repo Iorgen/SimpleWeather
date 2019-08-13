@@ -3,5 +3,5 @@ from .HtmlParser import YandexHtmlWeatherParser
 
 parsers = [
     OpenWeatherApiParser,
-    YandexHtmlWeatherParser
+    # YandexHtmlWeatherParser
 ]

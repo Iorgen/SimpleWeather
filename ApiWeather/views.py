@@ -16,7 +16,6 @@ def weather_parser(request):
     """
     List all code snippets, or create a new snippet.
     """
-
     try:
         response = {}
         city_names = request.query_params.get('city_name', None)
@@ -30,9 +29,7 @@ def weather_parser(request):
             non_exist_cities = [c for c in city_names if c not in validate_cities]
             response = {c: 'not exist ' for c in non_exist_cities}
 
-        # cities = City.get_cities_names()
-        # cities = cities[::1]
-        parse_results = parse_weather(cities)
+        parse_results = parse_weather(validate_cities)
         response.update(parse_results)
         if not response:
             return Response(response, status=status.HTTP_201_CREATED)
@@ -51,19 +48,21 @@ class WeatherView(viewsets.ModelViewSet):
     def get_queryset(self):
         """ allow rest api to filter by city_name and last  """
         city_name = self.request.query_params.get('city_name', None)
-        queryset = Weather.objects.all()
+        queryset = Weather.current_weather()
         # TODO exception handler
         if city_name is not None:
-            queryset = Weather.objects.all().filter(city__name=city_name)
+            queryset = Weather.current_weather.filter(city__name=city_name)
         return queryset
 
 
 def home(request):
-    context = {}
-    # Show last info about weather using buit-in function Weather
+    context = {
+        'last_weather': Weather.current_weather()
+    }
     return render(request, 'ApiWeather/home.html', context=context)
 
 
 def docs(request):
     return render(request, 'ApiWeather/docs.html', {'title': 'Docs'})
+
 

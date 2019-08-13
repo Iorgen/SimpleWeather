@@ -8,11 +8,9 @@ import django
 import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'SimpleWeather.settings'
 django.setup()
-# import the logging library
 import logging
-
-# Get an instance of a logger
 logger = logging.getLogger(__name__)
+# TODO DOCUMENT ALL CLASSES AND STEPS
 
 
 class BaseParser(metaclass=ABCMeta):
@@ -32,7 +30,7 @@ class BaseParser(metaclass=ABCMeta):
     def prepare_url(self, city):
         pass
 
-    def send_request(self):
+    def send_request(self, url):
         response = requests.get(self._url, params=self._params)
         print(response.url)
         # If the response was successful, no Exception will be raised
@@ -55,8 +53,8 @@ class BaseParser(metaclass=ABCMeta):
             raise DatabaseUploadException('Database upload problem')
 
     def parse(self, city):
-        self.prepare_url(city)
-        response = self.send_request()
+        url = self.prepare_url(city)
+        response = self.send_request(url)
         weather_info = self.parse_response(response)
         self.upload_to_database(weather_info)
 
