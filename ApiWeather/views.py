@@ -11,27 +11,35 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def weather_parser(request):
     """
     List all code snippets, or create a new snippet.
     """
-    if request.method == 'POST':
-        weather = Weather.objects.all()
-        serializer = WeatherSerializer(weather, many=True)
-        return Response(serializer.data)
 
-    elif request.method == 'GET':
-        try:
-            cities = City.get_cities_names()
-            cities = cities[::1]
-            parse_results = parse_weather(cities)
-            if not parse_results:
-                return Response([], status=status.HTTP_201_CREATED)
-            return Response(parse_results, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except Exception as e:
-            logger.error(e)
-            return Response(["Api Error"], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    try:
+        response = {}
+        city_names = request.query_params.get('city_name', None)
+        cities = City.get_cities_names()
+        cities = cities[::1]
+        if city_names is None:
+            validate_cities = cities[::1]
+        else:
+            city_names = city_names.split('|')
+            validate_cities = [c for c in city_names if c in cities]
+            non_exist_cities = [c for c in city_names if c not in validate_cities]
+            response = {c: 'not exist ' for c in non_exist_cities}
+
+        # cities = City.get_cities_names()
+        # cities = cities[::1]
+        parse_results = parse_weather(cities)
+        response.update(parse_results)
+        if not response:
+            return Response(response, status=status.HTTP_201_CREATED)
+        return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as e:
+        logger.error(e)
+        return Response(["Api Error"], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class WeatherView(viewsets.ModelViewSet):

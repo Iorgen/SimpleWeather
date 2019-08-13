@@ -4,3 +4,4 @@ venv
 *.log
 # SQLite databases
 *.sqlite
+Readme.md
