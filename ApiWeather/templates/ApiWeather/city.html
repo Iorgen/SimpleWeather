@@ -1,15 +1,11 @@
 {% extends 'ApiWeather/base.html' %}
 {% block content %}
-    <h1> Latest weather information</h1>
-    {% for weather in last_weather %}
+    {% for weather in city_weather %}
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
-                    <a class="mr-2" href="{% url 'ApiWeather-city' weather.city.name %}">{{ weather.city.name }} </a>
-                    <small class="text-muted">
-                        Receiving date:{{ weather.date_added|date:"F d h:m:s, Y" }}
-                        Measurement date:{{ weather.measurement_date|date:"F d h:m:s, Y" }}
-                    </small>
+                    <a class="mr-2" href="#">{{ weather.city.name }} </a>
+                    <small class="text-muted">{{ weather.measurement_date|date:"F d h:m, Y" }}</small>
                 </div>
                 <h2>
                     <a class="article-title" href="#">{{ weather.temperature }} <span>&#176;C</span>

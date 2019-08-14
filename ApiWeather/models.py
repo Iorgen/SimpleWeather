@@ -31,3 +31,8 @@ class Weather(models.Model):
         last_weather = Weather.objects.order_by('city__name', '-date_added').distinct('city__name')
         return last_weather
 
+    @staticmethod
+    def weather_by_city(city_name):
+        weather = Weather.objects.order_by('-date_added').filter(city__name=city_name)
+        return weather
+

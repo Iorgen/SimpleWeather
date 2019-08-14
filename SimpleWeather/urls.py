@@ -17,14 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
 
-from django.conf.urls import url
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/',  user_views.register, name='register'),
-    # patterns that define to which app should i go
     path('', include('ApiWeather.urls')),
 
 ]

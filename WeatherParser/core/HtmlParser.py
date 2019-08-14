@@ -18,7 +18,7 @@ class YandexHtmlWeatherParser(BaseHtmlParser):
 
     def parse_response(self, response):
         try:
-            soup = BeautifulSoup(response.text, 'lxml')
+            soup = BeautifulSoup(response.text, 'html.parser')
             current_time = soup.find(class_='time fact__time')
             current_weather = soup.find(class_='temp fact__temp')
             weather_info = []
