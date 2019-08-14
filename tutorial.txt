@@ -156,7 +156,13 @@ docker-compose up -d
 docker-compose ps
 docker-compose images
 Problem with user whot not connected to docker daemon -
-
+sudo docker-compose build
+sudo docker-compose up -d
+sudo docker-compose ps - show all
+sudo docker-compose images - show all images with ids
+sudo docker inspect --format="{{.Id}}" dg01
+# Super User creation
+sudo docker exec -it 89e470d56a728a20c1c3fa5281895a5c47b9c64ed0f2c86daa95637d20d8865b  python manage.py createsuperuser
 
 
 
@@ -215,6 +221,25 @@ sudo -u postgres psql postgres- call postgress console terminal
     alter role user_admin set default_transaction_isolation to 'read committed';
     alter role user_admin set timezone to 'UTC';
     create database django_api_db owner user_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 database manipulation example

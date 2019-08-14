@@ -3,7 +3,6 @@ from django.contrib import messages
 from .forms import UserRegisterForm
 
 
-# Create your views here.
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -16,9 +15,3 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
-
-# message.debug
-# message.info
-# message.succes
-# message.warning
-# message.warning

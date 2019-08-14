@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib import messages
 from WeatherParser import parse_weather
-from django.shortcuts import get_object_or_404
 import logging
 logger = logging.getLogger(__name__)
 
@@ -65,7 +64,6 @@ def weather_parser(request):
         return Response(["Api Error"], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# TODO refactoring for tasks from readme
 class WeatherView(viewsets.ModelViewSet):
     # TODO API authorization for key.
     # permission_classes = (IsAuthenticated, )
@@ -81,52 +79,10 @@ class WeatherView(viewsets.ModelViewSet):
             queryset = Weather.current_weather.filter(city__name=city_name)
         return queryset
 
-# --------------------------------------------------------------
-
-
-
-@api_view(['GET'])
-def weather_in_city(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
-    try:
-        response = {}
-        city_name = request.query_params.get('city_name', None)
-        cities = City.get_cities_names()
-        cities = cities[::1]
-        if city_name not in cities:
-            response = {city_name: 'not exist '}
-            return Response(response, status=status.HTTP_404_NOT_FOUND)
-
-        else:
-            weather = Weather.onjects().all().filter
-        response.update(parse_results)
-        if not response:
-            return Response(response, status=status.HTTP_201_CREATED)
-        return Response(response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    except Exception as e:
-        logger.error(e)
-        return Response(["Api Error"], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class WeatherByCityView(viewsets.ViewSet):
-    """
-    A simple ViewSet for listing or retrieving users.
-    """
-    def list(self, request):
-        queryset = Weather.objects.all()
-        serializer = WeatherSerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, city=None):
-        queryset = Weather.objects.all()
-        weather = get_object_or_404(queryset, city__name=city)
-        serializer = WeatherSerializer(weather)
-        return Response(serializer.data)
-
 
 class WeatherByCityView(viewsets.ModelViewSet):
+    # TODO API authorization for key.
+    # permission_classes = (IsAuthenticated, )
     queryset = Weather.objects.all()
     serializer_class = WeatherSerializer
     lookup_field = 'city__name'
