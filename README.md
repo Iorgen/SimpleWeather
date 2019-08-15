@@ -73,17 +73,15 @@ cd ~/SimpleWeatherDocker/
 docker-compose build
 ```    
     
-### if you see:
+### if you see:  
 ```
 ERROR: yaml.parser.ParserError: while parsing a block mapping
   in "./docker-compose.yml", line 1, column 1
 expected <block end>, but found '<block mapping start>'
   in "./docker-compose.yml", line 2, column 3
 ```
-### got to and check your docker-compose.yaml
-```
-yaml-online-parser.appspot.com
-```
+### got to [yaml](yaml-online-parser.appspot.com) and check your docker-compose.yaml
+
 ### Deploy poject
 ```
 docker-compose up -d
