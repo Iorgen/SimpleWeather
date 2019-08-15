@@ -1,7 +1,16 @@
 .idea
 __pycache__
 venv
-*.log
+
 # SQLite databases
 *.sqlite
+*.sqlite3
 Readme.md
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+.env

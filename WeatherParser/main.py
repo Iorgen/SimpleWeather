@@ -7,7 +7,6 @@ from WeatherParser import parse_weather
 
 
 if __name__ == "__main__":
-    print("working")
     cities = City.get_cities_names()
     cities = cities[::1]
     parse_weather(cities)

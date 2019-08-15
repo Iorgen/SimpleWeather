@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models import Subquery
 
 
 class City(models.Model):
@@ -27,11 +28,11 @@ class Weather(models.Model):
 
     @staticmethod
     def current_weather():
-        last_weather = Weather.objects.order_by('city__name', '-date_added').distinct('city__name')
+        last_weather = Weather.objects.filter().order_by('city__name', 'source', '-date_added').distinct('city__name', 'source')
         return last_weather
 
     @staticmethod
     def weather_by_city(city_name):
-        weather = Weather.objects.order_by('-date_added').filter(city__name=city_name)
+        weather = Weather.objects.filter(city__name=city_name).order_by('city__name', 'source', '-date_added').distinct('city__name', 'source')
         return weather
 

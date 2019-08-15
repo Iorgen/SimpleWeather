@@ -7,5 +7,5 @@ class WeatherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Weather
         depth = 1
-        fields = ('temperature', 'measurement_date', 'source', 'city')
+        fields = ('id', 'temperature', 'date_added', 'measurement_date', 'source', 'city')
 

@@ -1,6 +1,5 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 import requests
-from requests.exceptions import HTTPError
 from ApiWeather.models import City, Weather
 from ApiWeather.exceptions import DatabaseUploadException
 import datetime
@@ -31,13 +30,12 @@ class BaseParser(metaclass=ABCMeta):
         pass
 
     def send_request(self, url):
-        response = requests.get(self._url, params=self._params)
-        print(response.url)
+        response = requests.get(url, params=self._params)
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
         return response
 
-    def parse_response(self, response):
+    def parse_response(self, response, city):
         pass
 
     def upload_to_database(self, weather_info):
@@ -50,12 +48,14 @@ class BaseParser(metaclass=ABCMeta):
 
                 weather.save()
         except Exception as e:
+            logger.error(e)
+            print(e)
             raise DatabaseUploadException('Database upload problem')
 
     def parse(self, city):
         url = self.prepare_url(city)
         response = self.send_request(url)
-        weather_info = self.parse_response(response)
+        weather_info = self.parse_response(response, city)
         self.upload_to_database(weather_info)
 
 

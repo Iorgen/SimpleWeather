@@ -26,14 +26,14 @@ class OpenWeatherApiParser(BaseApiKeyParser):
         self._params[self._city_param] = city
         return self._url
 
-    def parse_response(self, response):
+    def parse_response(self, response, city):
         try:
             open_weather = response.json()
             weather_info = dict()
             weather_info['source'] = 'OpenWeather.org'
             weather_info['temperature'] = open_weather['main']['temp']
             weather_info['date'] = int(open_weather['dt'])
-            weather_info['city_name'] = open_weather['name']
+            weather_info['city_name'] = city
             return [weather_info]
         except Exception as e:
             logger.error(e)
