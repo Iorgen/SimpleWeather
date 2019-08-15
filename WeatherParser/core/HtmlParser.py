@@ -6,9 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# TODO fix YANDEX parser
 class YandexHtmlWeatherParser(BaseHtmlParser):
-
+    """ Class for parsing weather from html from yandex.ru/pogoda/ resource
+        """
     _url = 'http://yandex.ru/pogoda/'
 
     def __init__(self, **kwds):
@@ -32,4 +32,3 @@ class YandexHtmlWeatherParser(BaseHtmlParser):
         except Exception as e:
             logger.error(e)
             raise ResponseParsingException('Parsing Exception')
-

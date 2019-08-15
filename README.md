@@ -1,4 +1,4 @@
-# Simple Weather project deployment
+# Simple Weather project
 The project was created as part of a test task for Improvado company
 
 Enviroment: Ubuntu 16.04 + python 3.5
@@ -140,8 +140,8 @@ Enviroment: Ubuntu 16.04 + python 3.5
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'django_api_db',
             'USER': 'user_admin',
-            'PASSWORD': '123upc098',
-            'HOST': 'password',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
             'PORT': '',
         }
     }
@@ -188,10 +188,24 @@ Enviroment: Ubuntu 16.04 + python 3.5
 - site/api/v1/parse/?city_name={city_name|city_name|city_name}
     
 
-### How to use 
-- home.
-- weather 
-- city_weather 
+### Pages 
+    # Html pages urls
+    path('', views.home, name='ApiWeather-home'),
+    path('city_weather/<str:city_name>/', views.city_weather, name='ApiWeather-city'),
+    path('docs/', views.docs, name='ApiWeather-docs'),
+    # Api urls
+    path('api/v1/', include(weather_router.urls)),
+    path('api/v1/parse/', views.weather_parser),
+    # Api Documentation urls
+    path('docs/openapi', get_schema_view(
+        title="Your Project",
+        description="API for all things …"
+    ), name='openapi-schema'),
+
+### Add city in database
+
+DESCRIBE HOW TO ADD CITY INSIDE DATABASE 
+
 
 ### How to scale 
 - About parsers
@@ -302,6 +316,7 @@ Enviroment: Ubuntu 16.04 + python 3.5
             except Exception as e:
                 logger.error(e)
                 raise ResponseParsingException('Parsing Exception')
-    ```
+    ``` 
+  - include parser class name into parses array inside **SimpleWeather/WeatherParser/core/\_\_init__.py** 
 
 

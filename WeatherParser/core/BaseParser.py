@@ -9,36 +9,39 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'SimpleWeather.settings'
 django.setup()
 import logging
 logger = logging.getLogger(__name__)
-# TODO DOCUMENT ALL CLASSES AND STEPS
 
 
 class BaseParser(metaclass=ABCMeta):
     """ Base abstract class for all kind of parsers
     Using template method
+    1) prepare_url
+    2) send_request
+    3) parse_response
+    4) upload_to_database
     """
     _url = ''
     _params = {}
 
     def __init__(self):
-        """
-        :param url: source address information
-        :param params: query execution parameters
-        """
         super(BaseParser, self).__init__()
 
     def prepare_url(self, city):
+        """ Base url preparation method """
         pass
 
     def send_request(self, url):
+        """ Base request sending method """
         response = requests.get(url, params=self._params)
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
         return response
 
     def parse_response(self, response, city):
+        """ Base request response parsing method """
         pass
 
     def upload_to_database(self, weather_info):
+        """ Base database uploading method using Django ORM model"""
         try:
             for weather in weather_info:
                 weather = Weather(temperature=weather['temperature'],
@@ -62,9 +65,9 @@ class BaseParser(metaclass=ABCMeta):
 class BaseApiKeyParser(BaseParser):
     """Base class for all API kind of parsers
     """
-    _city_param = 'None'
-    _api_key_param = 'None'
-    _api_key = 'None'
+    _city_param = ''
+    _api_key_param = ''
+    _api_key = ''
 
     def __init__(self, **kwargs):
         super(BaseApiKeyParser, self).__init__()

@@ -5,7 +5,8 @@ logger = logging.getLogger(__name__)
 
 
 class OpenWeatherApiParser(BaseApiKeyParser):
-
+    """ Class for parsing weather via API from OpenWeather.org resource
+    """
     _city_param = 'q'
     _api_key_param = 'appid'
 
@@ -13,12 +14,10 @@ class OpenWeatherApiParser(BaseApiKeyParser):
     _api_key = 'ec96dbe80eea8425e6712cdff8ec9ee2'
 
     _params = {
-        "units" : "metric"
+        "units":"metric"
     }
 
     def __init__(self, **kwds):
-        """ Class for parsing weather via API from OpenWeather.org resource
-        """
         super(OpenWeatherApiParser, self).__init__(**kwds)
         self._params[self._api_key_param] = self._api_key
 

@@ -40,7 +40,9 @@ def docs(request):
 @api_view(['GET'])
 def weather_parser(request):
     """
-    List all code snippets, or create a new snippet.
+    API for weather parsing
+    :param request: Django request
+    :return: rest_framework.response
     """
     try:
         response = {}

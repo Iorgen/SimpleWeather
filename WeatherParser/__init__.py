@@ -7,6 +7,11 @@ logger = logging.getLogger(__name__)
 
 
 def parse_weather(cities):
+    """
+    method parsing weather for each parser in __init__.py - parsers in all cities
+    :param cities: list
+    :return: parse results list for each parser+city combination with error type
+    """
     parse_results = {}
     for parser in parsers:
         parser = parser()
