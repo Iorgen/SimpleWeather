@@ -23,7 +23,8 @@ class YandexHtmlWeatherParser(BaseHtmlParser):
             current_time = soup.find(class_='time fact__time')
             current_weather = soup.find(class_='temp fact__temp fact__temp_size_s').find(class_="temp__value")
             weather_info = {}
-            weather_info['temperature'] = current_weather.text
+            weather_info['temperature'] = current_weather.text[1:]
+            print(weather_info['temperature'])
             weather_info['source'] = 'YandexPogoda'
             weather_info['date'] = dateutil.parser.parse(current_time['datetime']).timestamp()
             weather_info['city_name'] = city
