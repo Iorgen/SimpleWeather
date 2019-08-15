@@ -1,13 +1,14 @@
+import logging
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import Weather, City
 from .serializers import WeatherSerializer
+from WeatherParser import parse_weather
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.contrib import messages
-from WeatherParser import parse_weather
-import logging
+from rest_framework.exceptions import NotFound
 logger = logging.getLogger(__name__)
 
 
@@ -71,29 +72,16 @@ class WeatherView(viewsets.ModelViewSet):
     serializer_class = WeatherSerializer
 
     def get_queryset(self):
-        """ allow rest api to filter by city_name and last  """
         city_name = self.request.query_params.get('city_name', None)
         queryset = Weather.current_weather()
-        # TODO exception handler
         if city_name is not None:
-            queryset = Weather.current_weather.filter(city__name=city_name)
-        return queryset
-
-
-class WeatherByCityView(viewsets.ModelViewSet):
-    # TODO API authorization for key.
-    # permission_classes = (IsAuthenticated, )
-    queryset = Weather.objects.all()
-    serializer_class = WeatherSerializer
-    lookup_field = 'city__name'
-
-    def retrieve(self, request, *args, **kwargs):
-        city_name = kwargs.get('city__name', None)
-        self.queryset = Weather.objects.all().filter(city__name=city_name)
-        print(self.queryset)
-        return super(WeatherByCityView, self).retrieve(request, *args, **kwargs)
-        # return Response([], status=status.HTTP_201_CREATED)
-
+            queryset = Weather.weather_by_city(city_name)
+            if queryset:
+                return queryset
+            else:
+                raise NotFound()
+        else:
+            return queryset
 
 
 
