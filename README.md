@@ -240,7 +240,7 @@ DESCRIBE HOW TO ADD CITY INSIDE DATABASE
 
 - clone this [repo]( https://github.com/Iorgen/SimpleWeatherDeployment) to your computer 
 - clone this [repo]( https://github.com/Iorgen/SimpleWeather) to your computer unzip and copy files inside src directory in SimpleWeatherDeployment
-- create errors.log inside NEED TO WRITE THIS
+- create **errors.log** inside src/WeatherParser/
 - change SimpleWeatherDocker/src/SimpleWeather/settings.py to this.
     ```
     DEBUG = False
@@ -303,6 +303,27 @@ DESCRIBE HOW TO ADD CITY INSIDE DATABASE
     ```
     sudo docker-compose version
     ```
+  
+- Install postrgesql
+   - Very good tutorial is [here]( https://djbook.ru/examples/77/) below just terminal commands from this tutorial
+   
+    ```
+    # install 
+    sudo apt-get install postgresql postgresql-server-dev-9.5
+    # Open postgres console 
+    sudo -u postgres psql postgres
+    # Set root passwrod 
+    \password postgres 
+    # configure and create database 
+    create user user_admin with password 'password';
+    alter role user_admin set client_encoding to 'utf8';
+    alter role user_admin set default_transaction_isolation to 'read committed';
+    alter role user_admin set timezone to 'UTC';
+    create database django_api_db owner user_admin;
+    # exit the console 
+    \q 
+    ```
+  
 - Go to folder where you clone Docker project via terminal 
     ```
     cd ~/SimpleWeatherDocker/
@@ -354,25 +375,7 @@ DESCRIBE HOW TO ADD CITY INSIDE DATABASE
 - Clone this [repo]( https://github.com/Iorgen/SimpleWeather) to your computer
 
 
-- Install postrgesql
-   - Very good tutorial is [here]( https://djbook.ru/examples/77/) below just terminal commands from this tutorial
-   
-    ```
-    # install 
-    sudo apt-get install postgresql postgresql-server-dev-9.5
-    # Open postgres console 
-    sudo -u postgres psql postgres
-    # Set root passwrod 
-    \password postgres 
-    # configure and create database 
-    create user user_admin with password 'password';
-    alter role user_admin set client_encoding to 'utf8';
-    alter role user_admin set default_transaction_isolation to 'read committed';
-    alter role user_admin set timezone to 'UTC';
-    create database django_api_db owner user_admin;
-    # exit the console 
-    \q 
-    ```
+
 - Open terminal inside SimpleWeather project
 - Checkout to develop branch 
     ```
