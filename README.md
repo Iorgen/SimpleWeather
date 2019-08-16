@@ -28,6 +28,12 @@
 - Источники данных:
   * [ЯндексПогода](https://yandex.ru/pogoda/) - данные получаются посредством web-scraping'а прямо из HTML-кода страницы
   * [OpenWeatherMap](http://openweathermap.org/) - данные получаются через их публичный API
+  
+Что в данном проекте можно было бы улучшить либо сделать по другому 
+
+1) Запуск парсера в отдельном процессе: варианты (django-tasks, Crontab)
+2) Внедрить CI 
+
 # Simple Weather project
 
 The project was created as part of a test task for Improvado company
@@ -333,12 +339,17 @@ DESCRIBE HOW TO ADD CITY INSIDE DATABASE
     sudo docker exec -it dg01_id python manage.py createsuperuser
     ```
 
-- Setup Cron Task Manager for hourly parsing 
+- Start parser task for hourly weather update (This method is not so good, You have open terminal better create Crontab task )
     ```
-    HERE SHOULD BE CRON TASK COMMANDS 
+    sudo docker exec -it dg01_id python manage.py parse_weather
     ```
 
-    
+- To stop and start project inside docker use 
+    ```
+    sudo docker-compose start
+    sudo docker-compose stop
+    ```
+
 ### For developing and scaling
 - Clone this [repo]( https://github.com/Iorgen/SimpleWeather) to your computer
 
